@@ -4,7 +4,7 @@
     var TemplateController = function ($scope, $http) {
 
         $scope.date = new Date();
-        $http.get("views/offercount.js").then(function (response) {
+        $http.get("offercount.js").then(function (response) {
             $scope.counter = response.data.counter;
         })
     };

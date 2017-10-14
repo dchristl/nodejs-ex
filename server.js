@@ -99,9 +99,8 @@ initDb(function(err){
   console.log('Error connecting to Mongo. Message:\n'+err);
 });
 
-
 var serveStatic = require('serve-static');
-app.use(serveStatic(__dirname)).listen(port, ip);
+app.use(serveStatic(__dirname + '/views')).listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
 
 module.exports = app ;

@@ -3,12 +3,12 @@
     app.config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
         $routeProvider.when("/main",
             {
-                templateUrl: "views/app/main/landing.html",
+                templateUrl: "app/main/landing.html",
                 controller: "MainController"
             })
             .when("/offer",
             {
-                templateUrl: "views/app/offers/offer.html",
+                templateUrl: "app/offers/offer.html",
                 controller: "OfferController"
             })
 
