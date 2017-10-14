@@ -1,8 +1,12 @@
 (function () {
 
     var app = angular.module("ecu-estate");
-    var TemplateController = function ($scope) {
-        $scope.counter = 5
+    var TemplateController = function ($scope, $http) {
+
+        $scope.date = new Date();
+        $http.get("views/offercount.js").then(function (response) {
+            $scope.counter = response.data.counter;
+        })
     };
     app.controller("TemplateController", TemplateController);
 

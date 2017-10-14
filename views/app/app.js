@@ -5,7 +5,14 @@
             {
                 templateUrl: "views/app/main/landing.html",
                 controller: "MainController"
-            }).otherwise({redirectTo: '/main'});
+            })
+            .when("/offer",
+            {
+                templateUrl: "views/app/offers/offer.html",
+                controller: "OfferController"
+            })
+
+            .otherwise({redirectTo: '/main'});
     }]);
 })();
 
