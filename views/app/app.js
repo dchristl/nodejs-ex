@@ -11,6 +11,11 @@
                 templateUrl: "app/offers/offer.html",
                 controller: "OfferController"
             })
+            .when("/admin/:id",
+            {
+                templateUrl: "app/admin/admin.html",
+                controller: "AdminController"
+            })
 
             .otherwise({redirectTo: '/main'});
     }]);
