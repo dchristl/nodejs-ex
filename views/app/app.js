@@ -7,15 +7,19 @@
                 controller: "MainController"
             })
             .when("/offer",
-            {
-                templateUrl: "app/offers/offer.html",
-                controller: "OfferController"
-            })
+                {
+                    templateUrl: "app/offers/offer.html",
+                    controller: "OfferController"
+                })
             .when("/admin/:id",
-            {
-                templateUrl: "app/admin/admin.html",
-                controller: "AdminController"
-            })
+                {
+                    templateUrl: "restricted",
+                    controller: "AdminController"
+                })
+            .when("/login",
+                {
+                    templateUrl: "app/login/login.html"
+                })
 
             .otherwise({redirectTo: '/main'});
     }]);

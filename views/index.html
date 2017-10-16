@@ -65,8 +65,8 @@
                 <li>
                     <a href="#!/contact/">Kontakt</a>
                 </li>
-                <li>
-                    <a href="#!/admin/new">Adminbereich</a>
+                <li ng-show="isLoggedIn">
+                    <a href="#!/login">Adminbereich</a>
                 </li>
             </ul>
         </div>
