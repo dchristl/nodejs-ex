@@ -67,7 +67,7 @@ function make(app) {
                 } else {
                     if (req.body.password === user.password) {
                         req.session_state.user = user;
-                        res.redirect('/restricted');
+                        res.redirect('/#!/admin/new');
                     } else {
                         res.redirect("/#!/login");
                     }
@@ -84,7 +84,7 @@ function make(app) {
     app.get('/restricted', function (req, res) {
 
         if (!req.session_state.user) {
-            res.cancel();//TODO
+            res.status(302).redirect("/login");//TODO
         } else {
             res.sendFile(path.resolve(__dirname + "/../views/restricted/admin.html"));
         }
