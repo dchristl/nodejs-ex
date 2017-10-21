@@ -24,6 +24,8 @@ var db = null, dbDetails = new Object();
 var mongodb = require('mongodb');
 
 var initDb = function (callback) {
+    console.error('Mongourl' + mongoURL);
+    console.error('Mongodb' + mongodb);
     if (mongoURL == null) return;
 
     if (mongodb == null) return;
@@ -49,7 +51,7 @@ initDb(function (err) {
 var dbConnection = function () {
     if (!db) {
         initDb(function (err) {
-            console.log("Error occured");
+            console.log("Error occured" + err);
         });
     }
     return db;
