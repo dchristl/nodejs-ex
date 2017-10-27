@@ -13,6 +13,7 @@
     "morgan": "^1.7.0",
     "body-parser": "1.18.2",
     "cookie-parser": "1.4.3",
+    "pbkdf2": "3.0.14",
     "client-sessions": "0.8.0"
   },
   "engine": {

@@ -7,47 +7,38 @@ function make(app) {
     }));
 
     var dbModule = require('./database.js');
-    var mongodb = require('mongodb');
 
 
     app.post('/addOffer', function (req, res) {
-        var dbConnection = dbModule.dbConnection();
-        if (dbConnection) {
-            var promise = dbConnection.collection('offers').insertOne(req.body);
-        } else {
+        dbModule.insertOffer(req.body, function () {
             res.status(200).send();
-        }
-        res.status(200).send();
+        });
+
     });
 
 
     app.get('/offercount', function (req, res) {
-        // try to initialize the db on every request if it's not already
-        // initialized.
-        var dbConnection = dbModule.dbConnection();
-        if (dbConnection) {
-            dbConnection.collection('offers').count(function (err, count) {
-                res.send('{ "offers": ' + count + '}');
-            });
-        } else {
-            res.send('{ "offers": -1 }');
-        }
+        dbModule.getOfferCount(function (offerCount) {
+            res.send('{ "offers": ' + offerCount + '}');
+        });
+
     });
 
 
     app.get('/offer/:id', function (req, res) {
 
-        var dbConnection = dbModule.dbConnection();
-        if (dbConnection && mongodb.ObjectID.isValid(req.params.id)) {
-            dbConnection.collection('offers').findOne({
-                _id: mongodb.ObjectID(req.params.id, function () {
-                })
-            }, function (err, items) {
-                res.send(items);
-            });
-        } else {
+        if (req.params.id === 'new') {
             res.status(200);
+        } else {
+            dbModule.getOfferById(req.params.id, function (item) {
+                if (item) {
+                    res.send(item);
+                } else {
+                    res.redirect('/#!/admin/new');
+                }
+            });
         }
+
     });
 
 // error handling
@@ -59,22 +50,15 @@ function make(app) {
 
     app.post('/login', function (req, res) {
 
-        var dbConnection = dbModule.dbConnection();
-        if (dbConnection) {
-            dbConnection.collection('users').findOne({user: req.body.user}, function (err, user) {
-                if (!user) {
-                    res.redirect("/#!/login");
-                } else {
-                    if (req.body.password === user.password) {
-                        req.session_state.user = user;
-                        res.redirect('/#!/admin/new');
-                    } else {
-                        res.redirect("/#!/login");
-                    }
-                }
-            });
+        dbModule.isUserValid(req.body.username, req.body.password, function (userValid) {
+            if (!userValid) {
+                res.redirect("/#!/login");
+            } else {
+                req.session_state.user = req.body.username;
+                res.redirect('/#!/admin/new');
+            }
+        });
 
-        }
     });
 
     app.get('/login', function (req, res) {
